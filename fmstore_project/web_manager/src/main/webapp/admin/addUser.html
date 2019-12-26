@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>添加用户</title>
+    <link rel="icon" href="../img/unicom.png">
+    <link rel="stylesheet" type="text/css" href="../css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="../css/pages-register.css" />
+</head>
+
+<body>
+<div id="app">
+    <div class="register py-container ">
+
+        <div class="registerArea">
+            <h3>添加用户</h3>
+            <div class="info" style="margin: 20px 299px">
+                <form class="sui-form form-horizontal">
+
+                    <div class="control-group">
+                        <label class="control-label">登陆名（不可修改）：</label>
+                        <div class="controls">
+                            <input type="text" v-model="user.username" placeholder="登陆名" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">登陆密码：</label>
+                        <div class="controls">
+                            <input type="password" v-model="user.password" placeholder="登陆密码" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">确认密码：</label>
+                        <div class="controls">
+                            <input type="password" v-model="repassword" placeholder="再次输入密码" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">姓名：</label>
+                        <div class="controls">
+                            <input type="text" v-model="user.realname" placeholder="请输入真实姓名" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">电话：</label>
+                        <div class="controls">
+                            <input type="text" v-model="user.telephone" placeholder="电话" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">所在部门：</label>
+                        <div class="controls">
+                            <input type="text" v-model="user.department" placeholder="所在部门" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">员工编号：</label>
+                        <div class="controls">
+                            <input type="text" v-model="user.number" placeholder="输入员工编号" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">电子邮箱：</label>
+                        <div class="controls">
+                            <input type="text" v-model="user.email" placeholder="电子邮箱" class="input-xfat input-xlarge">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label"></label>
+                        <div class="controls btn-reg">
+                            <a class="sui-btn btn-block btn-xlarge btn-danger" @click="add()" target="_blank">确认添加</a>
+                        </div>
+                    </div>
+                </form>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script type="text/javascript" src="../plugins/vue/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../plugins/vue/axios-0.18.0.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            user:{},
+            repassword:''
+        },
+        methods: {
+            add:function () {
+                if(this.user.password != this.repassword){
+                    alert('两次输入密码不一致，请重新输入！');
+                    return;
+                }
+                axios.post("/user/add.do",this.user)
+                    .then(function (response) {
+                        if(response.data.success == true){
+                            /*console.log(response);*/
+                            alert(response.data.message);
+                            location.href="user_list.html";
+                        }else {
+                            alert(response.data.message)
+                        }
+                    }).catch(function (reason) {
+                    console.log(reason);
+                })
+            }
+        },
+    });
+</script>
+
+</html>

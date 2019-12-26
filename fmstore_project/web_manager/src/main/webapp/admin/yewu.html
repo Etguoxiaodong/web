@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>党的建设</title>
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../plugins/pageination/zpageNav.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body class="hold-transition skin-red sidebar-mini">
+
+<div id="app">
+    <div class="box-header with-border" style="height: 64.5px;line-height: 54px;">
+        <h3 class="box-title">业务介绍</h3>
+    </div>
+    <div class="box-body">
+        <!-- 数据表格 -->
+        <div class="table-box">
+            <!--工具栏-->
+            <div class="pull-left">
+                <div class="form-group form-inline">
+                    <div class="btn-group">
+                        <a href="article_edit.html" type="button"  class="btn btn-default" title="新建" ><i class="fa fa-file-o"></i> 新建</a>
+                        <button type="button" class="btn btn-default" title="删除" @click="deleteBrand()" ><i class="fa fa-trash-o"></i> 删除</button>
+                        <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
+                    </div>
+                    <div class="box-tools pull-right">
+                        <div class="has-feedback" style="margin-left: 650px; font-size: 14px">
+                            文章名: <input type="text" style="width: 100px" v-model="searchObj.name" class="form-control" >
+                            作者: <input type="text" style="width: 100px" v-model="searchObj.firstChar" class="form-control">
+                            <input class="btn btn-default" type="button"  @click="pageHandler(1)"  value="查询">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box-tools pull-right">
+                <div class="has-feedback"></div>
+            </div>
+            <!--数据列表-->
+            <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+                <thead>
+                <tr>
+                    <th class="" style="padding-right:0px">
+                        <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                    </th>
+                    <th class="sorting_asc">文章ID</th>
+                    <th class="sorting">文章名</th>
+                    <th class="sorting">作者</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="brandItem in brandList">
+                    <td><input  type="checkbox" v-model="brandItem.check" @click="deleteSelection($event,brandItem)"  ></td>
+                    <td>{{brandItem.id}}</td>
+                    <td>{{brandItem.name}}</td>
+                    <td>{{brandItem.firstChar}}</td>
+                    <td class="text-center">
+                        <a type="button" class="btn bg-olive btn-xs" :href="'article_edit.html?id='+brandItem.id"  >修改</a>
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+    <!--分页-->
+    <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+              v-bind:max-page="maxPage"  v-on:pagehandler="pageHandler">
+    </zpagenav>
+    <!-- 编辑窗口 -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" >
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h3 id="myModalLabel">{{title}}</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered table-striped"  width="800px">
+                        <tr>
+                            <td>品牌名称</td>
+                            <td><input  class="form-control" v-model="brand.name" placeholder="品牌名称" >  </td>
+                        </tr>
+                        <tr>
+                            <td>首字母</td>
+                            <td><input  class="form-control" v-model="brand.firstChar" placeholder="首字母">  </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" @click="save()" data-dismiss="modal" aria-hidden="true">保存</button>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+
+<script src="../plugins/vue/vuejs-2.5.16.js"></script>
+<script src="../plugins/vue/axios-0.18.0.js"></script>
+<script src="../plugins/vue/qs.js"></script>
+<script  src="../plugins/pageination/zpageNav.js"></script>
+<!--<script src="../js/brand.js"></script>-->
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            brandList:[],
+            brand:{},
+            page: 1,  //显示的是哪一页 当前角标
+            pageSize: 10, //每一页显示的数据条数
+            total: 0, //记录总数
+            maxPage:9,
+            selectedID:[],
+            searchObj:{
+                pId:4
+            }
+        },
+        methods:{
+            pageHandler:function (page) {
+                this.page = page;
+                var _this =this;
+                axios.post("/brand/findPage.do?curPage="+this.page+"&pageSize="+this.pageSize,this.searchObj).then(function (response) {
+                    var pageResult = response.data.message;
+                    _this.brandList = pageResult.rows;
+                    _this.total = pageResult.total;
+                }).catch(function (reason) {
+                    console.log(reason);
+                });
+            },
+            /*   add:function(){
+                   this.title = "品牌添加";
+                   this.brand ={};
+               },*/
+            /*    update:function(item){
+                    this.title = "品牌编辑";
+                    this.brand = JSON.parse(JSON.stringify(item))
+                },*/
+            /*  save:function () {
+                  var _this = this;
+                  var url = '';
+                  if (_this.brand.id != null){
+                      url = '/brand/updateBrand.do' //更新
+                  } else {
+                      url = '/brand/addBrand.do';  //添加
+                  }
+                  axios.post(url, _this.brand)
+                      .then(function (response) {
+                          if (response.data.success){
+                              alert(response.data.message);
+                              //刷新页面
+                              _this.pageHandler(1);
+                          } else {
+                              alert(response.data.message);
+                          }
+                      })
+              },*/
+
+            deleteSelection:function (event,brand) {
+                //判断当前是否选中
+                if(event.target.checked){
+                    //如果选中  添加记录id
+                    this.selectedID.push(brand.id);
+                }else {
+                    //如果不选中(取消选中)   原来 记录id 移除
+                    var idx = this.selectedID.indexOf(brand.id);
+                    this.selectedID.splice(idx,1);
+                }
+            },
+            deleteBrand:function () {
+                var _this = this;
+                axios.post("/brand/deleteBrandWithId.do",Qs.stringify({ids:this.selectedID},{indices:false}))
+                    .then(function (response) {
+                        if (response.data.success){
+                            alert(response.data.message);
+                            //刷新页面
+                            _this.pageHandler(1);
+                        } else {
+                            alert(response.data.message);
+                        }
+                    });
+
+            }
+        },
+        created:function () {
+            this.pageHandler(1);
+        }
+
+    });
+</script>
+
+
+</html>

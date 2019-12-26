@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>用户列表</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+    <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../plugins/pageination/zpageNav.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini"  >
+<div id="app">
+<div class="box-header with-border"  style="height: 64.5px;line-height: 54px;">
+    <h3 class="box-title">用户列表</h3>
+</div>
+<div class="box-body">
+    <!-- 数据表格 -->
+    <div class="table-box">
+
+        <!--工具栏-->
+        <div class="box-tools pull-right">
+            <div class="has-feedback">
+                用户名：<input  v-model="searchuser.username">
+                手机号码： <input v-model="searchuser.telphone" >
+                <button class="btn btn-default" @click="pageHandler(1)">查询</button>
+            </div>
+        </div>
+        <!--数据列表-->
+        <table id="dataList" class="table table-bordered table-striped table-hover dataTable">
+            <thead>
+            <tr>
+                <th class="" style="padding-right:0px">
+                    <input id="selall" type="checkbox" class="icheckbox_square-blue">
+                </th>
+                <th class="sorting_asc">员工编号</th>
+                <th class="sorting">用户名</th>
+                <th class="sorting">姓名</th>
+                <th class="sorting">所在部门</th>
+                <th class="sorting">联系电话</th>
+                <th class="text-center">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="user in userList">
+                <td><input  type="checkbox" v-model="user.check" @click="deleteSelection($event,user)"  ></td>
+                <td>{{user.number}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.realname}}</td>
+                <td>{{user.department}}</td>
+                <td>{{user.telphone}}</td>
+                <td class="text-center">
+                    <button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal" >修改</button>
+                </td>
+            </tr>
+            <tr>
+                <td><input  type="checkbox"></td>
+                <td>2</td>
+                <td>公司名称公司名称2</td>
+                <td>店铺名称2</td>
+                <td>Myxq2</td>
+                <td>138****5643</td>
+                <td class="text-center">
+                    <button type="button"
+                            class="btn bg-olive btn-xs"
+                            data-toggle="modal"
+                            data-target="#editModal"
+                    >详情</button>
+                </td>
+            </tr>
+            <tr>
+                <td><input  type="checkbox"></td>
+                <td>3</td>
+                <td>公司名称公司名称3</td>
+                <td>店铺名称3</td>
+                <td>Myxq3</td>
+                <td>138****5643</td>
+                <td class="text-center">
+                    <button type="button"
+                            class="btn bg-olive btn-xs"
+                            data-toggle="modal"
+                            data-target="#editModal"
+                    >详情</button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <!--分页-->
+        <zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+                  v-bind:max-page="maxPage"  v-on:pagehandler="pageHandler">
+        </zpagenav>
+
+    </div>
+</div>
+<!-- 编辑窗口 -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 id="myModalLabel">账号信息编辑</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped"  width="800px">
+                    <tr>
+                        <td>用户名</td>
+                        <td>
+                            <input type="text" v-bind="user.username" readonly class="form-control">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>姓名</td>
+                        <td><input v-model="user.realname" class="form-control" >  </td>
+                    </tr>
+                    <tr>
+                        <td>员工编号</td>
+                        <td>
+                            <input select2 v-model="user.number"   class="form-control" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>联系电话</td>
+                        <td>
+                            <input select2 v-model="user.telphone"   class="form-control" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>所在部门</td>
+                        <td>
+                            <input select2 v-model="user.department"   class="form-control" type="text"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>电子邮箱</td>
+                        <td>
+                            <input select2 v-model="user.email"   class="form-control" type="text"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-dismiss="modal" @click="saveClick()" aria-hidden="true">保存</button>
+                <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script type="text/javascript" src="../plugins/vue/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../plugins/vue/axios-0.18.0.js"></script>
+<script src="../plugins/vue/qs.js"></script>
+<script  src="../plugins/pageination/zpageNav.js"></script>
+
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+           userList:[],
+           user:{},
+           selectedIds:[],
+            page: 1,  //显示的是哪一页 当前角标
+            pageSize: 10, //每一页显示的数据条数
+            total: 0, //记录总数
+            maxPage:9,
+            searchuser:{}
+
+        },
+        methods: {
+            pageHandler:function (page) {
+                this.page = page;
+                var _this =this;
+                axios.post("/user/findPage.do?curPage="+this.page+"&pageSize="+this.pageSize,this.searchuser).then(function (response) {
+                    var pageResult = response.data.message;
+                    _this.brandList = pageResult.rows;
+                    _this.total = pageResult.total;
+                }).catch(function (reason) {
+                    console.log(reason);
+                });
+            },
+            save:function () {
+                var _this = this;
+                axios.post("/user/update.do",this.user)
+                    .then(function (response) {
+                        if(response.data.success == true){
+                            /*console.log(response);*/
+                            alert(response.data.message);
+                            _this.pageHandler(1);
+                        }else {
+                            alert(response.data.message)
+                        }
+                    }).catch(function (reason) {
+                    console.log(reason);
+                })
+            }
+        },
+        deleteSelection:function (event,user) {
+            //判断当前是否选中
+            if(event.target.checked){
+                //如果选中  添加记录id
+                this.selectedIds.push(user.id);
+            }else {
+                //如果不选中(取消选中)   原来 记录id 移除
+                var idx = this.selectedIds.indexOf(user.id);
+                this.selectedIds.splice(idx,1);
+            }
+        },
+        deleteUser:function () {
+            var _this = this;
+            axios.post("/user/deleteUserWithId.do",Qs.stringify({ids:this.selectedIds},{indices:false}))
+                .then(function (response) {
+                    if (response.data.success){
+                        alert(response.data.message);
+                        //刷新页面
+                        _this.pageHandler(1);
+                    } else {
+                        alert(response.data.message);
+                    }
+                }).catch(function (reason) {
+                    console.log(reason)
+            });
+        },
+        created:function () {
+            this.pageHandler(1);
+        }
+    });
+</script>
+</html>
