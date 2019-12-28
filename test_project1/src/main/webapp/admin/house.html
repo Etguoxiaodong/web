@@ -27,14 +27,14 @@
 			<div class="pull-left">
 				<div class="form-group form-inline">
 					<div class="btn-group">
-						<button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
-						<button type="button" class="btn btn-default" title="删除" @click="deleteBrand()" ><i class="fa fa-trash-o"></i> 删除</button>
+						<button type="button" @click="add()" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
+						<button type="button" class="btn btn-default" title="删除" @click="deleteHouse()" ><i class="fa fa-trash-o"></i> 删除</button>
 						<button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
 					</div>
 					<div class="box-tools pull-right">
 						<div class="has-feedback" style="margin-left: 650px; font-size: 14px">
-							楼号: <input type="text" style="width: 100px" v-model="searchObj.name" class="form-control" >
-							单元: <input type="text" style="width: 100px" v-model="searchObj.firstChar" class="form-control">
+							楼号: <input type="text" style="width: 100px" v-model="searchObj.building" class="form-control" >
+							单元: <input type="text" style="width: 100px" v-model="searchObj.unit" class="form-control">
 							<input class="btn btn-default" type="button"  @click="pageHandler(1)"  value="查询">
 						</div>
 					</div>
@@ -53,17 +53,23 @@
 					<th class="sorting_asc">楼号</th>
 					<th class="sorting">单元号</th>
 					<th class="sorting">门牌号</th>
+					<th class="sorting">面积</th>
+					<th class="sorting">业主</th>
+					<th class="sorting">状态</th>
 					<th class="text-center">操作</th>
 				</tr>
 				</thead>
 				<tbody>
-				<tr v-for="brandItem in brandList">
-					<td><input  type="checkbox" v-model="brandItem.check" @click="deleteSelection($event,brandItem)"  ></td>
-					<td>{{brandItem.id}}</td>
-					<td>{{brandItem.name}}</td>
-					<td>{{brandItem.firstChar}}</td>
+				<tr v-for="houseItem in houseList">
+					<td><input  type="checkbox" v-model="houseItem.check" @click="deleteSelection($event,houseItem)"  ></td>
+					<td>{{houseItem.building}}</td>
+					<td>{{houseItem.unit}}</td>
+					<td>{{houseItem.door}}</td>
+					<td>{{houseItem.area}}</td>
+					<td>{{houseItem.ownerid}}</td>
+					<td>{{houseItem.state}}</td>
 					<td class="text-center">
-						<button type="button" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal"  >修改</button>
+						<button type="button" @click="update(houseItem)" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal"  >修改</button>
 					</td>
 				</tr>
 
@@ -88,12 +94,24 @@
 				<div class="modal-body">
 					<table class="table table-bordered table-striped"  width="800px">
 						<tr>
-							<td>品牌名称</td>
-							<td><input  class="form-control" v-model="brand.name" placeholder="品牌名称" >  </td>
+							<td>楼号</td>
+							<td><input  class="form-control" v-model="house.building" placeholder="楼号" >  </td>
 						</tr>
 						<tr>
-							<td>首字母</td>
-							<td><input  class="form-control" v-model="brand.firstChar" placeholder="首字母">  </td>
+							<td>单元号</td>
+							<td><input  class="form-control" v-model="house.unit" placeholder="单元号">  </td>
+						</tr>
+						<tr>
+							<td>门牌号</td>
+							<td><input  class="form-control" v-model="house.door" placeholder="门牌号">  </td>
+						</tr>
+						<tr>
+							<td>面积</td>
+							<td><input  class="form-control" v-model="house.area" placeholder="面积（㎡）">  </td>
+						</tr>
+						<tr>
+							<td>状态</td>
+							<td><input  class="form-control" v-model="house.state" placeholder="状态"></td>
 						</tr>
 					</table>
 				</div>
@@ -118,46 +136,47 @@
 	new Vue({
 		el:"#app",
 		data:{
-			brandList:[],
-			brand:{},
+			houseList:[],
+			house:{},
 			page: 1,  //显示的是哪一页 当前角标
 			pageSize: 10, //每一页显示的数据条数
 			total: 0, //记录总数
 			maxPage:9,
 			selectedID:[],
 			searchObj:{
-				pId:3
-			}
+			},
+			title:'添加楼宇'
 		},
 		methods:{
 			pageHandler:function (page) {
 				this.page = page;
 				var _this =this;
-				axios.post("/brand/findPage.do?curPage="+this.page+"&pageSize="+this.pageSize,this.searchObj).then(function (response) {
+				axios.post("/house/findPage.do?curPage="+this.page+"&pageSize="+this.pageSize,this.searchObj).then(function (response) {
 					var pageResult = response.data.message;
-					_this.brandList = pageResult.rows;
+					_this.houseList = pageResult.rows;
 					_this.total = pageResult.total;
 				}).catch(function (reason) {
 					console.log(reason);
 				});
 			},
-			/*   add:function(){
-                   this.title = "品牌添加";
-                   this.brand ={};
-               },*/
-			/*    update:function(item){
-                    this.title = "品牌编辑";
-                    this.brand = JSON.parse(JSON.stringify(item))
-                },*/
-			/*  save:function () {
+			   add:function(){
+                   this.title = "添加楼宇";
+                   this.house ={};
+               },
+			    update:function(houseItem){
+                    this.title = "楼宇编辑";
+                    console.log(houseItem)
+                    this.house = JSON.parse(JSON.stringify(houseItem))
+                },
+			  save:function () {
                   var _this = this;
                   var url = '';
-                  if (_this.brand.id != null){
-                      url = '/brand/updateBrand.do' //更新
+                  if (_this.house.id != null){
+                      url = '/house/updateHouse.do' //更新
                   } else {
-                      url = '/brand/addBrand.do';  //添加
+                      url = '/house/addHouse.do';  //添加
                   }
-                  axios.post(url, _this.brand)
+                  axios.post(url, _this.house)
                       .then(function (response) {
                           if (response.data.success){
                               alert(response.data.message);
@@ -167,22 +186,22 @@
                               alert(response.data.message);
                           }
                       })
-              },*/
+              },
 
-			deleteSelection:function (event,brand) {
+			deleteSelection:function (event,houseItem) {
 				//判断当前是否选中
 				if(event.target.checked){
 					//如果选中  添加记录id
-					this.selectedID.push(house.id);
+					this.selectedID.push(houseItem.id);
 				}else {
 					//如果不选中(取消选中)   原来 记录id 移除
-					var idx = this.selectedID.indexOf(house.id);
+					var idx = this.selectedID.indexOf(houseItem.id);
 					this.selectedID.splice(idx,1);
 				}
 			},
-			deleteBrand:function () {
+			deleteHouse:function () {
 				var _this = this;
-				axios.post("/brand/deleteBrandWithId.do",Qs.stringify({ids:this.selectedID},{indices:false}))
+				axios.post("/house/deleteHouseWithId.do",Qs.stringify({ids:this.selectedID},{indices:false}))
 						.then(function (response) {
 							if (response.data.success){
 								alert(response.data.message);

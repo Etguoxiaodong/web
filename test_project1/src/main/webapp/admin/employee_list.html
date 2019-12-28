@@ -27,14 +27,14 @@
             <div class="pull-left">
                 <div class="form-group form-inline">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default" title="新建" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
-                        <button type="button" class="btn btn-default" title="删除" @click="deleteBrand()" ><i class="fa fa-trash-o"></i> 删除</button>
+                        <button type="button" class="btn btn-default" title="新建" @click="add()" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 新建</button>
+                        <button type="button" class="btn btn-default" title="删除" @click="deleteEmployee()" ><i class="fa fa-trash-o"></i> 删除</button>
                         <button type="button" class="btn btn-default" title="刷新" onclick="window.location.reload();"><i class="fa fa-refresh"></i> 刷新</button>
                     </div>
                     <div class="box-tools pull-right">
                         <div class="has-feedback" style="margin-left: 650px; font-size: 14px">
-                            部门: <input type="text" style="width: 100px" v-model="searchObj.name" class="form-control" >
-                            姓名: <input type="text" style="width: 100px" v-model="searchObj.firstChar" class="form-control">
+                            部门: <input type="text" style="width: 100px" v-model="searchObj.department" class="form-control" >
+                            姓名: <input type="text" style="width: 100px" v-model="searchObj.name" class="form-control">
                             <input class="btn btn-default" type="button"  @click="pageHandler(1)"  value="查询">
                         </div>
                     </div>
@@ -61,13 +61,17 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="brandItem in brandList">
-                    <td><input  type="checkbox" v-model="brandItem.check" @click="deleteSelection($event,brandItem)"  ></td>
-                    <td>{{brandItem.id}}</td>
-                    <td>{{brandItem.name}}</td>
-                    <td>{{brandItem.firstChar}}</td>
+                <tr v-for="empItem in employeeList">
+                    <td><input  type="checkbox" v-model="empItem.check" @click="deleteSelection($event,empItem)"  ></td>
+                    <td>{{empItem.name}}</td>
+                    <td>{{empItem.gender}}</td>
+                    <td>{{empItem.phone}}</td>
+                    <td>{{empItem.idnum}}</td>
+                    <td>{{empItem.department}}</td>
+                    <td>{{empItem.work}}</td>
+                    <td>{{empItem.hiredate}}</td>
                     <td class="text-center">
-                        <button type="button" class="btn btn-default" title="编辑" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 编辑</button>
+                        <button type="button" @click="update(empItem)" class="btn btn-default" title="编辑" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 编辑</button>
                     </td>
                 </tr>
 
@@ -92,12 +96,32 @@
                 <div class="modal-body">
                     <table class="table table-bordered table-striped"  width="800px">
                         <tr>
-                            <td>品牌名称</td>
-                            <td><input  class="form-control" v-model="brand.name" placeholder="品牌名称" >  </td>
+                            <td>姓名</td>
+                            <td><input  class="form-control" v-model="employee.name" placeholder="姓名" >  </td>
                         </tr>
                         <tr>
-                            <td>首字母</td>
-                            <td><input  class="form-control" v-model="brand.firstChar" placeholder="首字母">  </td>
+                            <td>性别</td>
+                            <td><input  class="form-control" v-model="employee.gender" placeholder="性别">  </td>
+                        </tr>
+                        <tr>
+                            <td>电话</td>
+                            <td><input  class="form-control" v-model="employee.phone" placeholder="电话">  </td>
+                        </tr>
+                        <tr>
+                            <td>证件</td>
+                            <td><input  class="form-control" v-model="employee.idnum" placeholder="证件号">  </td>
+                        </tr>
+                        <tr>
+                            <td>部门</td>
+                            <td><input  class="form-control" v-model="employee.department" placeholder="电话">  </td>
+                        </tr>
+                        <tr>
+                            <td>工作</td>
+                            <td><input  class="form-control" v-model="employee.work" placeholder="电话">  </td>
+                        </tr>
+                        <tr>
+                            <td>入职时间</td>
+                            <td><input  class="form-control" v-model="employee.hiredate" placeholder="电话">  </td>
                         </tr>
                     </table>
                 </div>
@@ -122,46 +146,46 @@
     new Vue({
         el:"#app",
         data:{
-            brandList:[],
-            brand:{},
+            employeeList:[],
+            employee:{},
             page: 1,  //显示的是哪一页 当前角标
             pageSize: 10, //每一页显示的数据条数
             total: 0, //记录总数
             maxPage:9,
             selectedID:[],
             searchObj:{
-                pId:1
-            }
+            },
+            title:"添加员工"
         },
         methods:{
             pageHandler:function (page) {
                 this.page = page;
                 var _this =this;
-                axios.post("/brand/findPage.do?curPage="+this.page+"&pageSize="+this.pageSize,this.searchObj).then(function (response) {
+                axios.post("/empl/findPage.do?curPage="+this.page+"&pageSize="+this.pageSize,this.searchObj).then(function (response) {
                     var pageResult = response.data.message;
-                    _this.brandList = pageResult.rows;
+                    _this.employeeList = pageResult.rows;
                     _this.total = pageResult.total;
                 }).catch(function (reason) {
                     console.log(reason);
                 });
             },
-         /*   add:function(){
-                this.title = "品牌添加";
-                this.brand ={};
-            },*/
-        /*    update:function(item){
-                this.title = "品牌编辑";
-                this.brand = JSON.parse(JSON.stringify(item))
-            },*/
-          /*  save:function () {
+            add:function(){
+                this.title = "添加员工";
+                this.employee ={};
+            },
+            update:function(empItem){
+                this.title = "员工编辑";
+                this.employee = JSON.parse(JSON.stringify(empItem))
+            },
+            save:function () {
                 var _this = this;
                 var url = '';
-                if (_this.brand.id != null){
-                    url = '/brand/updateBrand.do' //更新
+                if (_this.employee.id != null){
+                    url = '/empl/updateEmployee.do' //更新
                 } else {
-                    url = '/brand/addBrand.do';  //添加
+                    url = '/empl/addEmployee.do';  //添加
                 }
-                axios.post(url, _this.brand)
+                axios.post(url, _this.employee)
                     .then(function (response) {
                         if (response.data.success){
                             alert(response.data.message);
@@ -171,22 +195,22 @@
                             alert(response.data.message);
                         }
                     })
-            },*/
+            },
 
-            deleteSelection:function (event,brand) {
+            deleteSelection:function (event,empItem) {
                 //判断当前是否选中
                 if(event.target.checked){
                     //如果选中  添加记录id
-                    this.selectedID.push(brand.id);
+                    this.selectedID.push(empItem.id);
                 }else {
                     //如果不选中(取消选中)   原来 记录id 移除
-                    var idx = this.selectedID.indexOf(brand.id);
+                    var idx = this.selectedID.indexOf(empItem.id);
                     this.selectedID.splice(idx,1);
                 }
             },
-            deleteBrand:function () {
+            deleteEmployee:function () {
                 var _this = this;
-                axios.post("/brand/deleteBrandWithId.do",Qs.stringify({ids:this.selectedID},{indices:false}))
+                axios.post("/empl/deleteEmployeeWithId.do",Qs.stringify({ids:this.selectedID},{indices:false}))
                     .then(function (response) {
                         if (response.data.success){
                             alert(response.data.message);
