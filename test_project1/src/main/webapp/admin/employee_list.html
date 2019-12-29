@@ -113,15 +113,15 @@
                         </tr>
                         <tr>
                             <td>部门</td>
-                            <td><input  class="form-control" v-model="employee.department" placeholder="电话">  </td>
+                            <td><input  class="form-control" v-model="employee.department" placeholder="部门">  </td>
                         </tr>
                         <tr>
                             <td>工作</td>
-                            <td><input  class="form-control" v-model="employee.work" placeholder="电话">  </td>
+                            <td><input  class="form-control" v-model="employee.work" placeholder="工作职责">  </td>
                         </tr>
                         <tr>
                             <td>入职时间</td>
-                            <td><input  class="form-control" v-model="employee.hiredate" placeholder="电话">  </td>
+                            <td><input  class="form-control" v-model="employee.hiredate" placeholder="入职日期">  </td>
                         </tr>
                     </table>
                 </div>
@@ -153,8 +153,7 @@
             total: 0, //记录总数
             maxPage:9,
             selectedID:[],
-            searchObj:{
-            },
+            searchObj:{},
             title:"添加员工"
         },
         methods:{

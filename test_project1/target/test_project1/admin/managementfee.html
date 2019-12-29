@@ -12,13 +12,14 @@
     <link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
     <link rel="stylesheet" href="../plugins/adminLTE/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="../css/style.css">
+	<link rel="stylesheet" href="../plugins/pageination/zpageNav.css">
 	<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
     <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
     
 </head>
 
 <body class="hold-transition skin-red sidebar-mini"  >
-
+<div id="app">
 <div class="box-header with-border"  style="height: 64.5px;line-height: 54px;">
 	<h3 class="box-title">物业费管理</h3>
 </div>
@@ -29,13 +30,13 @@
 		<!--工具栏-->
 		<div class="box-tools pull-right">
 			<div class="has-feedback">
-				业主名：<input style="width:80px;" >
+				年度：<input v-model="searchObj.year" style="width:80px;" >
 				手机号： <input  >
 				状态：
-				<input type="radio" value="" />全部
-				<input type="radio" value="0" />未交
-				<input type="radio" value="1" />已交
-				<button class="btn btn-default" >查询</button>
+				<input type="radio" name="status" v-model="searchObj.status"  />全部
+				<input type="radio" name="status" v-model="searchObj.status" value="0" />未缴费
+				<input type="radio" name="status" v-model="searchObj.status" value="1" />已缴费
+				<button class="btn btn-default" @click="pageHandler(1)">查询</button>
 			</div>
 		</div>
 		<!--数据列表-->
@@ -54,184 +55,100 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr>
-				<td><input  type="checkbox"></td>
-				<td>1</td>
-				<td>公司名称公司名称1</td>
-				<td>店铺名称1</td>
-				<td>Myxq1</td>
-				<td>138****5643</td>
+			<tr v-for="managefeeItem in managefeeList">
+				<td><input  type="checkbox" v-model="managefeeItem.check" @click="deleteSelection($event,managefeeItem)"  ></td>
+				<td>{{managefeeItem.year}}</td>
+				<td>{{managefeeItem.house}}</td>
+				<td>{{managefeeItem.owner}}</td>
+				<td>{{managefeeItem.phone}}</td>
+				<td><p v-if="managefeeItem.status == 0">未缴</p>
+					<p v-else>已缴</p>
+				</td>
 				<td class="text-center">
-					<button type="button"
-							class="btn bg-olive btn-xs"
-							data-toggle="modal"
-							data-target="#sellerModal"
-					>详情</button>
+					<button type="button" @click="update(managefeeItem)" class="btn btn-default" title="编辑" data-toggle="modal" data-target="#editModal" ><i class="fa fa-file-o"></i> 编辑</button>
 				</td>
 			</tr>
-			<tr>
-				<td><input  type="checkbox"></td>
-				<td>2</td>
-				<td>公司名称公司名称2</td>
-				<td>店铺名称2</td>
-				<td>Myxq2</td>
-				<td>138****5643</td>
-				<td class="text-center">
-					<button type="button"
-							class="btn bg-olive btn-xs"
-							data-toggle="modal"
-							data-target="#sellerModal"
-					>详情</button>
-				</td>
-			</tr>
-			<tr>
-				<td><input  type="checkbox"></td>
-				<td>3</td>
-				<td>公司名称公司名称3</td>
-				<td>店铺名称3</td>
-				<td>Myxq3</td>
-				<td>138****5643</td>
-				<td class="text-center">
-					<button type="button"
-							class="btn bg-olive btn-xs"
-							data-toggle="modal"
-							data-target="#sellerModal"
-					>详情</button>
-				</td>
-			</tr>
-
 			</tbody>
 		</table>
-
-
 	</div>
  </div>
-
-<!-- 商家详情 -->
-<div class="modal fade" id="sellerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" >
-	<div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">商家详情</h3>
+<!--分页-->
+<zpagenav v-bind:page="page" v-bind:page-size="pageSize" v-bind:total="total"
+		  v-bind:max-page="maxPage"  v-on:pagehandler="pageHandler">
+</zpagenav>
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" >
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h3 id="myModalLabel">{{title}}</h3>
+			</div>
+			<div class="modal-body">
+				<table class="table table-bordered table-striped"  width="800px">
+					<tr>
+						<td>姓名</td>
+						<td><input  class="form-control" v-model="managefee.year" placeholder="姓名" >  </td>
+					</tr>
+					<tr>
+						<td>性别</td>
+						<td><input  class="form-control" v-model="managefee.house" placeholder="性别">  </td>
+					</tr>
+					<tr>
+						<td>电话</td>
+						<td><input  class="form-control" v-model="managefee.owner" placeholder="电话">  </td>
+					</tr>
+					<tr>
+						<td>证件</td>
+						<td><input  class="form-control" v-model="managefee.phone" placeholder="证件号">  </td>
+					</tr>
+					<tr>
+						<td>部门</td>
+						<td><input  class="form-control" v-model="managefee.status" placeholder="电话">  </td>
+					</tr>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-success" @click="save()" data-dismiss="modal" aria-hidden="true">保存</button>
+				<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
+			</div>
 		</div>
-		<div class="modal-body">							
-			
-			 <ul class="nav nav-tabs">
-			  <li class="active"><a href="#home" data-toggle="tab">基本信息</a></li>
-			  <li><a href="#linkman" data-toggle="tab">联系人</a></li>
-			  <li><a href="#certificate" data-toggle="tab">证件</a></li>
-			  <li><a href="#ceo" data-toggle="tab">法定代表人</a></li>
-			  <li><a href="#bank" data-toggle="tab">开户行</a></li>
-			</ul>							
-			
-			<!-- 选项卡开始 -->         
-		    <div id="myTabContent" class="tab-content">
-			    <div class="tab-pane active in" id="home">
-			      <br>
-			      <table class="table table-bordered table-striped"  width="800px">
-			      	<tr>
-			      		<td>公司名称</td>
-			      		<td>美琪数码经营店</td>
-			      	</tr>
-			      	<tr>
-			      		<td>公司手机</td>
-			      		<td>13900221212</td>
-			      	</tr>
-			      	<tr>
-			      		<td>公司电话</td>
-			      		<td>010-20112222</td>
-			      	</tr>
-			      	<tr>
-			      		<td>公司详细地址</td>
-			      		<td>北京市西三旗建材城西路888号</td>
-			      	</tr>
-			      </table>			      
-      			</div>	
-			    <div class="tab-pane fade" id="linkman">
-			    	<br>
-					<table class="table table-bordered table-striped" >
-			      	<tr>
-			      		<td>联系人姓名</td>
-			      		<td>王美琪</td>
-			      	</tr>
-			      	<tr>
-			      		<td>联系人QQ</td>
-			      		<td>78223322</td>
-			      	</tr>
-			      	<tr>
-			      		<td>联系人手机</td>
-			      		<td>13500223322</td>
-			      	</tr>
-			      	<tr>
-			      		<td>联系人E-Mail</td>
-			      		<td>78223322@qq.com</td>
-			      	</tr>
-			      </table>
-			    </div>
-			    <div class="tab-pane fade" id="certificate">
-					<br>
-					<table class="table table-bordered table-striped" >
-				      	<tr>
-				      		<td>营业执照号</td>
-				      		<td>330106000109206</td>
-				      	</tr>
-				      	<tr>
-				      		<td>税务登记证号</td>
-				      		<td>0292039393011</td>
-				      	</tr>
-				      	<tr>
-				      		<td>组织机构代码证号</td>
-				      		<td>22320320302421</td>
-				      	</tr>				      	
-			     	</table>
-			    </div>
-			    <div class="tab-pane fade" id="ceo">
-					<br>
-					<table class="table table-bordered table-striped" >
-				      	<tr>
-				      		<td>法定代表人</td>
-				      		<td>王小聪</td>
-				      	</tr>
-				      	<tr>
-				      		<td>法定代表人身份证号</td>
-				      		<td>211030198503223122</td>
-				      	</tr>					   			      	
-			     	</table>
-			    </div>
-			    <div class="tab-pane fade" id="bank">
-					<br>
-					<table class="table table-bordered table-striped" >
-				      	<tr>
-				      		<td>开户行名称</td>
-				      		<td>中国建设银行北京市分行</td>
-				      	</tr>
-				      	<tr>
-				      		<td>开户行支行</td>
-				      		<td>海淀支行</td>
-				      	</tr>		
-				      	<tr>
-				      		<td>银行账号</td>
-				      		<td>999000111222</td>
-				      	</tr>			   			      	
-			     	</table>					
-			    </div>
-  			    </div> 			
-           <!-- 选项卡结束 -->          
-			
-			
-		</div>
-		<div class="modal-footer">						
-			<button class="btn btn-success" data-dismiss="modal" aria-hidden="true">审核通过</button>
-         	<button class="btn btn-danger"  data-dismiss="modal" aria-hidden="true">审核未通过</button>
-            <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">关闭商家</button>
-			<button class="btn btn-default" data-dismiss="modal" aria-hidden="true">关闭</button>
-		</div>
-	  </div>
 	</div>
 </div>
-
-
+</div>
 </body>
-
+<script src="../plugins/vue/vuejs-2.5.16.js"></script>
+<script src="../plugins/vue/axios-0.18.0.js"></script>
+<script src="../plugins/vue/qs.js"></script>
+<script  src="../plugins/pageination/zpageNav.js"></script>
+<script>
+	new Vue({
+		el:"#app",
+		data:{
+			managefeeList:[],
+			managefee:{},
+			page: 1,  //显示的是哪一页 当前角标
+			pageSize: 10, //每一页显示的数据条数
+			total: 0, //记录总数
+			maxPage:9,
+			searchObj:{},
+			title:'编辑'
+		},
+		methods:{
+			pageHandler:function (page) {
+				this.page = page;
+				var _this =this;
+				axios.post("/mana/findPage.do?curPage="+this.page+"&pageSize="+this.pageSize,this.searchObj).then(function (response) {
+					var pageResult = response.data.message;
+					_this.managefeeList = pageResult.rows;
+					_this.total = pageResult.total;
+				}).catch(function (reason) {
+					console.log(reason);
+				});
+			}
+		},
+		created:function () {
+			this.pageHandler(1)
+		}
+	});
+</script>
 </html>
