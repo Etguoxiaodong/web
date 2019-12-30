@@ -74,4 +74,9 @@ public class OwnerServiceImpl implements OwnerService {
 			ownerDao.deleteByPrimaryKey(id);
 		}
 	}
+
+	@Override
+	public Integer getAllOwner() {
+		return ownerDao.countByExample(null);
+	}
 }

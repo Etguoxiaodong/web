@@ -37,4 +37,12 @@ public class ManagementfeeServiceImpl implements ManagementfeeService {
 		Page<Managementfee> list = (Page<Managementfee>) manaDao.selectByExample(managementfeeQuery);
 		return new PageResult(list.getTotal(),list.getResult());
 	}
+
+	@Override
+	public Integer getNotManagefee() {
+		ManagementfeeQuery managementfeeQuery = new ManagementfeeQuery();
+		ManagementfeeQuery.Criteria criteria = managementfeeQuery.createCriteria();
+		criteria.andStatusEqualTo("0");
+		return manaDao.countByExample(managementfeeQuery);
+	}
 }

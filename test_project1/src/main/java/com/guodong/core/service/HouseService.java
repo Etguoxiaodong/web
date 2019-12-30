@@ -11,4 +11,6 @@ public interface HouseService {
 	void updateHouse(House house);
 
 	void deleteHouseWithId(Integer[] ids);
+
+	Integer getAllHouse();
 }

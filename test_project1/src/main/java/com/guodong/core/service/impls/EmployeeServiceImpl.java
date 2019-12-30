@@ -49,4 +49,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employeeDao.deleteByPrimaryKey(id);
 		}
 	}
+
+	@Override
+	public Integer getAllEmployee() {
+		return employeeDao.countByExample(null);
+	}
 }

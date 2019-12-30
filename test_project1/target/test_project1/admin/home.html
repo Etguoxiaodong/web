@@ -14,6 +14,7 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
+<div id="app">
     <!-- 内容头部 -->
     <section class="content-header" style="margin-top: 20px;">
         <h1>
@@ -29,7 +30,7 @@
                 <!-- small box -->
                 <div class="small-box bg-aqua">
                     <div class="inner">
-                        <h3>1800</h3>
+                        <h3>{{totalowner}}</h3>
                         <p>业主总数</p>
                     </div>
                     <div class="icon">
@@ -42,7 +43,7 @@
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>20</h3>
+                        <h3>{{totalemployee}}</h3>
                         <p>员工总数</p>
                     </div>
                     <div class="icon">
@@ -55,7 +56,7 @@
                 <!-- small box -->
                 <div class="small-box bg-yellow">
                     <div class="inner">
-                        <h3>3800</h3>
+                        <h3>{{totalhouse}}</h3>
                         <p>住宅总数</p>
                     </div>
                     <div class="icon">
@@ -68,7 +69,7 @@
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>860000</h3>
+                        <h3>{{notmanagefee}}</h3>
                         <p>未交物业费住宅数</p>
                     </div>
                     <div class="icon">
@@ -79,9 +80,43 @@
             </div>
         </div>
     </section>
-    <section>
-
-    </section>
+</div>
 </body>
-
+<script type="text/javascript" src="../plugins/vue/vuejs-2.5.16.js"></script>
+<script type="text/javascript" src="../plugins/vue/axios-0.18.0.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            totalowner:'',
+            totalhouse:'',
+            totalemployee:'',
+            notmanagefee:''
+        },
+        methods: {
+            getData:function () {
+                var _this = this;
+                axios.get("/home/getData.do")
+                    .then(function (response) {
+                        if(response.data.success == true){
+                            console.log(response);
+                            _this.totalowner = response.data.message.totalowner;
+                            _this.totalhouse = response.data.message.totalhouse;
+                            _this.totalemployee = response.data.message.totalemployee;
+                            _this.notmanagefee = response.data.message.notmanagefee;
+                            /*alert(response.data.message);*/
+                            /*location.href="owner_list.html";*/
+                        }else {
+                            alert(response.data.message)
+                        }
+                    }).catch(function (reason) {
+                    console.log(reason);
+                })
+            }
+        },
+        created:function () {
+            this.getData();
+        }
+    });
+</script>
 </html>

@@ -50,4 +50,9 @@ public class HouseServiceImpl implements HouseService {
 			houseDao.deleteByPrimaryKey(id);
 		}
 	}
+
+	@Override
+	public Integer getAllHouse() {
+		return houseDao.countByExample(null);
+	}
 }
