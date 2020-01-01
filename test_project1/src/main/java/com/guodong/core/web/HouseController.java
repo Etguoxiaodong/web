@@ -56,4 +56,14 @@ public class HouseController {
 			return new ResponseResult(false,"请求错误");
 		}
 	}
+	@RequestMapping("/getHouseList")
+	public ResponseResult getHouseList(){
+		try {
+			PageResult result = houseService.getHouseList();
+			return new ResponseResult(true,result);
+		}catch (Exception e){
+			e.printStackTrace();
+			return new ResponseResult(false,"获取楼宇列表失败");
+		}
+	}
 }

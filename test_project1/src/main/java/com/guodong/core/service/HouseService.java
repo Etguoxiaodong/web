@@ -13,4 +13,6 @@ public interface HouseService {
 	void deleteHouseWithId(Long[] ids);
 
 	Integer getAllHouse();
+
+	PageResult getHouseList();
 }
