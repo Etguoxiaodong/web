@@ -47,7 +47,7 @@ public class OwnerController {
 		}
 	}
 	@RequestMapping("deleteOwnerWithId")
-	public ResponseResult deleteOwnerWithId(Integer[] ids){
+	public ResponseResult deleteOwnerWithId(Long[] ids){
 		try {
 			ownerService.deleteOwnerWithId(ids);
 			return new ResponseResult(true,"删除成功");

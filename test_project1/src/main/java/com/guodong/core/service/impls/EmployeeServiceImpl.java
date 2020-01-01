@@ -22,8 +22,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		EmployeeQuery employeeQuery = new EmployeeQuery();
 		EmployeeQuery.Criteria criteria = employeeQuery.createCriteria();
 		if (employee != null){
-			if(employee.getDepartment() != null && !"".equals(employee.getDepartment())){
-				criteria.andDepartmentLike("%"+employee.getDepartment()+"%");
+			if(employee.getDepartmentid() != null ){
+				criteria.andDepartmentidEqualTo(employee.getDepartmentid());
 			}
 			if(employee.getName() != null && !"".equals(employee.getName())){
 				criteria.andNameLike("%"+employee.getName()+"%");
@@ -44,8 +44,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void deleteEmployeeWithId(Integer[] ids) {
-		for (Integer id : ids) {
+	public void deleteEmployeeWithId(Long[] ids) {
+		for (Long id : ids) {
 			employeeDao.deleteByPrimaryKey(id);
 		}
 	}

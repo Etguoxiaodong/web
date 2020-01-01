@@ -69,8 +69,8 @@ public class OwnerServiceImpl implements OwnerService {
 	 * @param ids 要删除的业主id
 	 */
 	@Override
-	public void deleteOwnerWithId(Integer[] ids) {
-		for (Integer id : ids) {
+	public void deleteOwnerWithId(Long[] ids) {
+		for (Long id : ids) {
 			ownerDao.deleteByPrimaryKey(id);
 		}
 	}

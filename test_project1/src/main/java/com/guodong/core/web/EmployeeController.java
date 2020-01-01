@@ -47,7 +47,7 @@ public class EmployeeController {
 		}
 	}
 	@RequestMapping("/deleteEmployeeWithId")
-	public ResponseResult deleteEmployeeWithId(Integer[] ids){
+	public ResponseResult deleteEmployeeWithId(Long[] ids){
 		try {
 			employeeService.deleteEmployeeWithId(ids);
 			return new ResponseResult(true,"删除成功");

@@ -3,9 +3,7 @@ package com.guodong.core.pojo;
 import java.io.Serializable;
 
 public class House implements Serializable {
-    private Integer id;
-
-    private String ownerid;
+    private Long id;
 
     private String building;
 
@@ -13,26 +11,16 @@ public class House implements Serializable {
 
     private String door;
 
-    private String area;
-
-    private String state;
+    private Double area;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getOwnerid() {
-        return ownerid;
-    }
-
-    public void setOwnerid(String ownerid) {
-        this.ownerid = ownerid == null ? null : ownerid.trim();
     }
 
     public String getBuilding() {
@@ -59,20 +47,12 @@ public class House implements Serializable {
         this.door = door == null ? null : door.trim();
     }
 
-    public String getArea() {
+    public Double getArea() {
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area == null ? null : area.trim();
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+    public void setArea(Double area) {
+        this.area = area;
     }
 
     @Override
@@ -82,12 +62,10 @@ public class House implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", ownerid=").append(ownerid);
         sb.append(", building=").append(building);
         sb.append(", unit=").append(unit);
         sb.append(", door=").append(door);
         sb.append(", area=").append(area);
-        sb.append(", state=").append(state);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -106,12 +84,10 @@ public class House implements Serializable {
         }
         House other = (House) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getOwnerid() == null ? other.getOwnerid() == null : this.getOwnerid().equals(other.getOwnerid()))
             && (this.getBuilding() == null ? other.getBuilding() == null : this.getBuilding().equals(other.getBuilding()))
             && (this.getUnit() == null ? other.getUnit() == null : this.getUnit().equals(other.getUnit()))
             && (this.getDoor() == null ? other.getDoor() == null : this.getDoor().equals(other.getDoor()))
-            && (this.getArea() == null ? other.getArea() == null : this.getArea().equals(other.getArea()))
-            && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()));
+            && (this.getArea() == null ? other.getArea() == null : this.getArea().equals(other.getArea()));
     }
 
     @Override
@@ -119,12 +95,10 @@ public class House implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getOwnerid() == null) ? 0 : getOwnerid().hashCode());
         result = prime * result + ((getBuilding() == null) ? 0 : getBuilding().hashCode());
         result = prime * result + ((getUnit() == null) ? 0 : getUnit().hashCode());
         result = prime * result + ((getDoor() == null) ? 0 : getDoor().hashCode());
         result = prime * result + ((getArea() == null) ? 0 : getArea().hashCode());
-        result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
         return result;
     }
 }

@@ -11,7 +11,7 @@ public interface HouseDao {
 
     int deleteByExample(HouseQuery example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(House record);
 
@@ -19,7 +19,7 @@ public interface HouseDao {
 
     List<House> selectByExample(HouseQuery example);
 
-    House selectByPrimaryKey(Integer id);
+    House selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") House record, @Param("example") HouseQuery example);
 

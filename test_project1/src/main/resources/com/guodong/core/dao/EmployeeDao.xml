@@ -2,14 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guodong.core.dao.EmployeeDao" >
   <resultMap id="BaseResultMap" type="com.guodong.core.pojo.Employee" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="IDnum" property="idnum" jdbcType="VARCHAR" />
-    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="idnum" property="idnum" jdbcType="VARCHAR" />
+    <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
     <result column="work" property="work" jdbcType="VARCHAR" />
-    <result column="hiredate" property="hiredate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -71,7 +70,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, name, gender, phone, IDnum, department, work, hiredate
+      id, name, gender, phone, idnum, departmentid, work
     </if>
     <if test="fields != null" >
       ${fields}
@@ -91,15 +90,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,name,gender,phone,IDnum,department,work,hiredate
+    id,name,gender,phone,idnum,departmentid,work
     from employee
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from employee
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.guodong.core.pojo.EmployeeQuery" >
     delete from employee
@@ -109,11 +108,11 @@
   </delete>
   <insert id="insert" parameterType="com.guodong.core.pojo.Employee" >
     insert into employee (id, name, gender, 
-      phone, IDnum, department, 
-      work, hiredate)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{idnum,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
-      #{work,jdbcType=VARCHAR}, #{hiredate,jdbcType=TIMESTAMP})
+      phone, idnum, departmentid, 
+      work)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{idnum,jdbcType=VARCHAR}, #{departmentid,jdbcType=BIGINT}, 
+      #{work,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.guodong.core.pojo.Employee" >
     insert into employee
@@ -131,21 +130,18 @@
         phone,
       </if>
       <if test="idnum != null" >
-        IDnum,
+        idnum,
       </if>
-      <if test="department != null" >
-        department,
+      <if test="departmentid != null" >
+        departmentid,
       </if>
       <if test="work != null" >
         work,
       </if>
-      <if test="hiredate != null" >
-        hiredate,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -159,14 +155,11 @@
       <if test="idnum != null" >
         #{idnum,jdbcType=VARCHAR},
       </if>
-      <if test="department != null" >
-        #{department,jdbcType=VARCHAR},
+      <if test="departmentid != null" >
+        #{departmentid,jdbcType=BIGINT},
       </if>
       <if test="work != null" >
         #{work,jdbcType=VARCHAR},
-      </if>
-      <if test="hiredate != null" >
-        #{hiredate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -180,7 +173,7 @@
     update employee
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
@@ -192,16 +185,13 @@
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
       <if test="record.idnum != null" >
-        IDnum = #{record.idnum,jdbcType=VARCHAR},
+        idnum = #{record.idnum,jdbcType=VARCHAR},
       </if>
-      <if test="record.department != null" >
-        department = #{record.department,jdbcType=VARCHAR},
+      <if test="record.departmentid != null" >
+        departmentid = #{record.departmentid,jdbcType=BIGINT},
       </if>
       <if test="record.work != null" >
         work = #{record.work,jdbcType=VARCHAR},
-      </if>
-      <if test="record.hiredate != null" >
-        hiredate = #{record.hiredate,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -210,14 +200,13 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update employee
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       gender = #{record.gender,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      IDnum = #{record.idnum,jdbcType=VARCHAR},
-      department = #{record.department,jdbcType=VARCHAR},
-      work = #{record.work,jdbcType=VARCHAR},
-      hiredate = #{record.hiredate,jdbcType=TIMESTAMP}
+      idnum = #{record.idnum,jdbcType=VARCHAR},
+      departmentid = #{record.departmentid,jdbcType=BIGINT},
+      work = #{record.work,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,29 +224,25 @@
         phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="idnum != null" >
-        IDnum = #{idnum,jdbcType=VARCHAR},
+        idnum = #{idnum,jdbcType=VARCHAR},
       </if>
-      <if test="department != null" >
-        department = #{department,jdbcType=VARCHAR},
+      <if test="departmentid != null" >
+        departmentid = #{departmentid,jdbcType=BIGINT},
       </if>
       <if test="work != null" >
         work = #{work,jdbcType=VARCHAR},
       </if>
-      <if test="hiredate != null" >
-        hiredate = #{hiredate,jdbcType=TIMESTAMP},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.guodong.core.pojo.Employee" >
     update employee
     set name = #{name,jdbcType=VARCHAR},
       gender = #{gender,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      IDnum = #{idnum,jdbcType=VARCHAR},
-      department = #{department,jdbcType=VARCHAR},
-      work = #{work,jdbcType=VARCHAR},
-      hiredate = #{hiredate,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+      idnum = #{idnum,jdbcType=VARCHAR},
+      departmentid = #{departmentid,jdbcType=BIGINT},
+      work = #{work,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

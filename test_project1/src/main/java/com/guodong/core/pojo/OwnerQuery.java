@@ -124,52 +124,52 @@ public class OwnerQuery {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -314,73 +314,133 @@ public class OwnerQuery {
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneIsNull() {
-            addCriterion("backphone is null");
+        public Criteria andBkphoneIsNull() {
+            addCriterion("bkphone is null");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneIsNotNull() {
-            addCriterion("backphone is not null");
+        public Criteria andBkphoneIsNotNull() {
+            addCriterion("bkphone is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneEqualTo(String value) {
-            addCriterion("backphone =", value, "backphone");
+        public Criteria andBkphoneEqualTo(String value) {
+            addCriterion("bkphone =", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneNotEqualTo(String value) {
-            addCriterion("backphone <>", value, "backphone");
+        public Criteria andBkphoneNotEqualTo(String value) {
+            addCriterion("bkphone <>", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneGreaterThan(String value) {
-            addCriterion("backphone >", value, "backphone");
+        public Criteria andBkphoneGreaterThan(String value) {
+            addCriterion("bkphone >", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneGreaterThanOrEqualTo(String value) {
-            addCriterion("backphone >=", value, "backphone");
+        public Criteria andBkphoneGreaterThanOrEqualTo(String value) {
+            addCriterion("bkphone >=", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneLessThan(String value) {
-            addCriterion("backphone <", value, "backphone");
+        public Criteria andBkphoneLessThan(String value) {
+            addCriterion("bkphone <", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneLessThanOrEqualTo(String value) {
-            addCriterion("backphone <=", value, "backphone");
+        public Criteria andBkphoneLessThanOrEqualTo(String value) {
+            addCriterion("bkphone <=", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneLike(String value) {
-            addCriterion("backphone like", value, "backphone");
+        public Criteria andBkphoneLike(String value) {
+            addCriterion("bkphone like", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneNotLike(String value) {
-            addCriterion("backphone not like", value, "backphone");
+        public Criteria andBkphoneNotLike(String value) {
+            addCriterion("bkphone not like", value, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneIn(List<String> values) {
-            addCriterion("backphone in", values, "backphone");
+        public Criteria andBkphoneIn(List<String> values) {
+            addCriterion("bkphone in", values, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneNotIn(List<String> values) {
-            addCriterion("backphone not in", values, "backphone");
+        public Criteria andBkphoneNotIn(List<String> values) {
+            addCriterion("bkphone not in", values, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneBetween(String value1, String value2) {
-            addCriterion("backphone between", value1, value2, "backphone");
+        public Criteria andBkphoneBetween(String value1, String value2) {
+            addCriterion("bkphone between", value1, value2, "bkphone");
             return (Criteria) this;
         }
 
-        public Criteria andBackphoneNotBetween(String value1, String value2) {
-            addCriterion("backphone not between", value1, value2, "backphone");
+        public Criteria andBkphoneNotBetween(String value1, String value2) {
+            addCriterion("bkphone not between", value1, value2, "bkphone");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidIsNull() {
+            addCriterion("houseid is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidIsNotNull() {
+            addCriterion("houseid is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidEqualTo(Long value) {
+            addCriterion("houseid =", value, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidNotEqualTo(Long value) {
+            addCriterion("houseid <>", value, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidGreaterThan(Long value) {
+            addCriterion("houseid >", value, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidGreaterThanOrEqualTo(Long value) {
+            addCriterion("houseid >=", value, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidLessThan(Long value) {
+            addCriterion("houseid <", value, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidLessThanOrEqualTo(Long value) {
+            addCriterion("houseid <=", value, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidIn(List<Long> values) {
+            addCriterion("houseid in", values, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidNotIn(List<Long> values) {
+            addCriterion("houseid not in", values, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidBetween(Long value1, Long value2) {
+            addCriterion("houseid between", value1, value2, "houseid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseidNotBetween(Long value1, Long value2) {
+            addCriterion("houseid not between", value1, value2, "houseid");
             return (Criteria) this;
         }
     }

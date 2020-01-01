@@ -47,7 +47,7 @@ public class HouseController {
 		}
 	}
 	@RequestMapping("/deleteHouseWithId")
-	public ResponseResult deleteHouseWithId(Integer[] ids){
+	public ResponseResult deleteHouseWithId(Long[] ids){
 		try {
 			houseService.deleteHouseWithId(ids);
 			return new ResponseResult(true,"删除成功");

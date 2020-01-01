@@ -10,7 +10,7 @@ public interface EmployeeService {
 
 	void updateEmployee(Employee employee);
 
-	void deleteEmployeeWithId(Integer[] ids);
+	void deleteEmployeeWithId(Long[] ids);
 
 	Integer getAllEmployee();
 }

@@ -1,10 +1,9 @@
 package com.guodong.core.pojo;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Employee implements Serializable {
-    private Integer id;
+    private Long id;
 
     private String name;
 
@@ -14,19 +13,17 @@ public class Employee implements Serializable {
 
     private String idnum;
 
-    private String department;
+    private Long departmentid;
 
     private String work;
 
-    private Date hiredate;
-
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -62,12 +59,12 @@ public class Employee implements Serializable {
         this.idnum = idnum == null ? null : idnum.trim();
     }
 
-    public String getDepartment() {
-        return department;
+    public Long getDepartmentid() {
+        return departmentid;
     }
 
-    public void setDepartment(String department) {
-        this.department = department == null ? null : department.trim();
+    public void setDepartmentid(Long departmentid) {
+        this.departmentid = departmentid;
     }
 
     public String getWork() {
@@ -76,14 +73,6 @@ public class Employee implements Serializable {
 
     public void setWork(String work) {
         this.work = work == null ? null : work.trim();
-    }
-
-    public Date getHiredate() {
-        return hiredate;
-    }
-
-    public void setHiredate(Date hiredate) {
-        this.hiredate = hiredate;
     }
 
     @Override
@@ -97,9 +86,8 @@ public class Employee implements Serializable {
         sb.append(", gender=").append(gender);
         sb.append(", phone=").append(phone);
         sb.append(", idnum=").append(idnum);
-        sb.append(", department=").append(department);
+        sb.append(", departmentid=").append(departmentid);
         sb.append(", work=").append(work);
-        sb.append(", hiredate=").append(hiredate);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -122,9 +110,8 @@ public class Employee implements Serializable {
             && (this.getGender() == null ? other.getGender() == null : this.getGender().equals(other.getGender()))
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getIdnum() == null ? other.getIdnum() == null : this.getIdnum().equals(other.getIdnum()))
-            && (this.getDepartment() == null ? other.getDepartment() == null : this.getDepartment().equals(other.getDepartment()))
-            && (this.getWork() == null ? other.getWork() == null : this.getWork().equals(other.getWork()))
-            && (this.getHiredate() == null ? other.getHiredate() == null : this.getHiredate().equals(other.getHiredate()));
+            && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
+            && (this.getWork() == null ? other.getWork() == null : this.getWork().equals(other.getWork()));
     }
 
     @Override
@@ -136,9 +123,8 @@ public class Employee implements Serializable {
         result = prime * result + ((getGender() == null) ? 0 : getGender().hashCode());
         result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         result = prime * result + ((getIdnum() == null) ? 0 : getIdnum().hashCode());
-        result = prime * result + ((getDepartment() == null) ? 0 : getDepartment().hashCode());
+        result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
         result = prime * result + ((getWork() == null) ? 0 : getWork().hashCode());
-        result = prime * result + ((getHiredate() == null) ? 0 : getHiredate().hashCode());
         return result;
     }
 }

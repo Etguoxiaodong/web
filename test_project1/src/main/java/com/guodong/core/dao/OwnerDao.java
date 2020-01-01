@@ -4,7 +4,6 @@ import com.guodong.core.pojo.Owner;
 import com.guodong.core.pojo.OwnerQuery;
 import org.apache.ibatis.annotations.Param;
 
-
 import java.util.List;
 
 public interface OwnerDao {
@@ -12,7 +11,7 @@ public interface OwnerDao {
 
     int deleteByExample(OwnerQuery example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Owner record);
 
@@ -20,7 +19,7 @@ public interface OwnerDao {
 
     List<Owner> selectByExample(OwnerQuery example);
 
-    Owner selectByPrimaryKey(Integer id);
+    Owner selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Owner record, @Param("example") OwnerQuery example);
 

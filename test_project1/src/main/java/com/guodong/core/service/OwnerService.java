@@ -10,7 +10,7 @@ public interface OwnerService {
 
 	void updateOwner(Owner owner);
 
-	void deleteOwnerWithId(Integer[] ids);
+	void deleteOwnerWithId(Long[] ids);
 
 	Integer getAllOwner();
 }

@@ -10,7 +10,7 @@ public interface HouseService {
 
 	void updateHouse(House house);
 
-	void deleteHouseWithId(Integer[] ids);
+	void deleteHouseWithId(Long[] ids);
 
 	Integer getAllHouse();
 }

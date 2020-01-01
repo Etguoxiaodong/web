@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guodong.core.dao.OwnerDao" >
   <resultMap id="BaseResultMap" type="com.guodong.core.pojo.Owner" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="backphone" property="backphone" jdbcType="VARCHAR" />
+    <result column="bkphone" property="bkphone" jdbcType="VARCHAR" />
+    <result column="houseid" property="houseid" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, name, phone, backphone
+      id, name, phone, bkphone, houseid
     </if>
     <if test="fields != null" >
       ${fields}
@@ -87,15 +88,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,name,phone,backphone
+    id,name,phone,bkphone,houseid
     from owner
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from owner
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.guodong.core.pojo.OwnerQuery" >
     delete from owner
@@ -105,9 +106,9 @@
   </delete>
   <insert id="insert" parameterType="com.guodong.core.pojo.Owner" >
     insert into owner (id, name, phone, 
-      backphone)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{backphone,jdbcType=VARCHAR})
+      bkphone, houseid)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{bkphone,jdbcType=VARCHAR}, #{houseid,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guodong.core.pojo.Owner" >
     insert into owner
@@ -121,13 +122,16 @@
       <if test="phone != null" >
         phone,
       </if>
-      <if test="backphone != null" >
-        backphone,
+      <if test="bkphone != null" >
+        bkphone,
+      </if>
+      <if test="houseid != null" >
+        houseid,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -135,8 +139,11 @@
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="backphone != null" >
-        #{backphone,jdbcType=VARCHAR},
+      <if test="bkphone != null" >
+        #{bkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="houseid != null" >
+        #{houseid,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -150,7 +157,7 @@
     update owner
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.name != null" >
         name = #{record.name,jdbcType=VARCHAR},
@@ -158,8 +165,11 @@
       <if test="record.phone != null" >
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.backphone != null" >
-        backphone = #{record.backphone,jdbcType=VARCHAR},
+      <if test="record.bkphone != null" >
+        bkphone = #{record.bkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseid != null" >
+        houseid = #{record.houseid,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -168,10 +178,11 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update owner
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
       name = #{record.name,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR},
-      backphone = #{record.backphone,jdbcType=VARCHAR}
+      bkphone = #{record.bkphone,jdbcType=VARCHAR},
+      houseid = #{record.houseid,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -185,17 +196,21 @@
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="backphone != null" >
-        backphone = #{backphone,jdbcType=VARCHAR},
+      <if test="bkphone != null" >
+        bkphone = #{bkphone,jdbcType=VARCHAR},
+      </if>
+      <if test="houseid != null" >
+        houseid = #{houseid,jdbcType=BIGINT},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.guodong.core.pojo.Owner" >
     update owner
     set name = #{name,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
-      backphone = #{backphone,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+      bkphone = #{bkphone,jdbcType=VARCHAR},
+      houseid = #{houseid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -45,8 +45,8 @@ public class HouseServiceImpl implements HouseService {
 	}
 
 	@Override
-	public void deleteHouseWithId(Integer[] ids) {
-		for (Integer id : ids) {
+	public void deleteHouseWithId(Long[] ids) {
+		for (Long id : ids) {
 			houseDao.deleteByPrimaryKey(id);
 		}
 	}

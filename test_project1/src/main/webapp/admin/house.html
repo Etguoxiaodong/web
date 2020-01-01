@@ -54,8 +54,6 @@
 					<th class="sorting">单元号</th>
 					<th class="sorting">门牌号</th>
 					<th class="sorting">面积</th>
-					<th class="sorting">业主</th>
-					<th class="sorting">状态</th>
 					<th class="text-center">操作</th>
 				</tr>
 				</thead>
@@ -66,8 +64,6 @@
 					<td>{{houseItem.unit}}</td>
 					<td>{{houseItem.door}}</td>
 					<td>{{houseItem.area}}</td>
-					<td>{{houseItem.ownerid}}</td>
-					<td>{{houseItem.state}}</td>
 					<td class="text-center">
 						<button type="button" @click="update(houseItem)" class="btn bg-olive btn-xs" data-toggle="modal" data-target="#editModal"  >修改</button>
 					</td>
@@ -109,10 +105,6 @@
 							<td>面积</td>
 							<td><input  class="form-control" v-model="house.area" placeholder="面积（㎡）">  </td>
 						</tr>
-						<tr>
-							<td>状态</td>
-							<td><input  class="form-control" v-model="house.state" placeholder="状态"></td>
-						</tr>
 					</table>
 				</div>
 				<div class="modal-footer">
@@ -131,7 +123,6 @@
 <script src="../plugins/vue/axios-0.18.0.js"></script>
 <script src="../plugins/vue/qs.js"></script>
 <script  src="../plugins/pageination/zpageNav.js"></script>
-<!--<script src="../js/brand.js"></script>-->
 <script>
 	new Vue({
 		el:"#app",
@@ -165,7 +156,7 @@
                },
 			    update:function(houseItem){
                     this.title = "楼宇编辑";
-                    console.log(houseItem)
+                    console.log(houseItem);
                     this.house = JSON.parse(JSON.stringify(houseItem))
                 },
 			  save:function () {
