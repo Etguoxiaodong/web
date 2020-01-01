@@ -58,7 +58,7 @@ public class HouseServiceImpl implements HouseService {
 
 	@Override
 	public PageResult getHouseList() {
-		Page<House> houses = (Page<House>) houseDao.selectByExample(null);
-		return new PageResult(houses.getTotal(),houses.getResult());
+		List<House> houses = houseDao.selectByExample(null);
+		return new PageResult(null,houses);
 	}
 }

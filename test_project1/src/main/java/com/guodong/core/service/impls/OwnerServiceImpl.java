@@ -2,10 +2,9 @@ package com.guodong.core.service.impls;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.guodong.core.dao.HouseDao;
 import com.guodong.core.dao.OwnerDao;
-import com.guodong.core.pojo.Owner;
-import com.guodong.core.pojo.OwnerQuery;
-import com.guodong.core.pojo.PageResult;
+import com.guodong.core.pojo.*;
 import com.guodong.core.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,8 @@ import java.util.List;
 public class OwnerServiceImpl implements OwnerService {
 	@Autowired
 	private OwnerDao ownerDao;
-
+	@Autowired
+	private HouseDao houseDao;
 	/**
 	 * 分页查询业主信息
 	 * @param curPage 当前页
@@ -43,7 +43,12 @@ public class OwnerServiceImpl implements OwnerService {
 			}
 		}
 		Page<Owner> owners = (Page<Owner>) ownerDao.selectByExample(ownerQuery);
-		return new PageResult(owners.getTotal(),owners.getResult());
+		Page<OwnerEntity> ownerEntities = new Page<>();
+		for (Owner owner : owners) {
+			House house = houseDao.selectByPrimaryKey(owner.getHouseid());
+			ownerEntities.getResult().add(new OwnerEntity(owner,house.getBuilding()+"-"+house.getUnit()+"-"+house.getDoor()));
+		}
+		return new PageResult(ownerEntities.getTotal(),ownerEntities.getResult());
 	}
 
 	/**

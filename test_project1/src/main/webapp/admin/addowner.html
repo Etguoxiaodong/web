@@ -36,7 +36,7 @@
                     <div class="control-group">
                         <label class="control-label">备用号码：</label>
                         <div class="controls">
-                            <input type="text" v-model="owner.backphone" placeholder="备用号码" class="input-xfat input-xlarge">
+                            <input type="text" v-model="owner.bkphone" placeholder="备用号码" class="input-xfat input-xlarge">
                         </div>
                     </div>
                     <div class="control-group">
@@ -77,38 +77,7 @@
             owner:{},
             buildingSelected:'',
             unitSelected:'',
-            houseList:[
-                {
-                    id:1,
-                    building:111,
-                    unit:1,
-                    door:401
-                },
-                {
-                    id:2,
-                    building:111,
-                    unit:3,
-                    door:401
-                },
-                {
-                    id:3,
-                    building:111,
-                    unit:3,
-                    door:402
-                },
-                {
-                    id:4,
-                    building:201,
-                    unit:1,
-                    door:401
-                },
-                {
-                    id:5,
-                    building:201,
-                    unit:2,
-                    door:402
-                }
-            ],
+            houseList:[],
             buildingList:[],
             unitList:[],
             doorList:[],
@@ -131,11 +100,13 @@
                 })
             },
             gethouseList:function () {
+                var _this = this;
                 axios.get("/house/getHouseList.do")
                     .then(function (response) {
                         if(response.data.success == true){
                             /*console.log(response);*/
                             _this.houseList = response.data.message.rows;
+                            _this.getbuildingList();
                         }else {
                             alert(response.data.message)
                         }
@@ -172,13 +143,12 @@
                 }
             },
             sethouseid:function () {
-                this.owner = {};
+                this.owner.houseid='';
                 this.owner.houseid = this.selectedhouse.id;
             }
         },
         created:function () {
             this.gethouseList();
-            this.getbuildingList();
         },
         mounted:function () {
 
