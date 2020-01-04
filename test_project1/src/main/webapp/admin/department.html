@@ -170,7 +170,7 @@
                     this.selectedID.splice(idx,1);
                 }
             },
-            deleteHouse:function () {
+            deleteDepartment:function () {
                 var _this = this;
                 axios.post("/dep/deleteDepWithId.do",Qs.stringify({ids:this.selectedID},{indices:false}))
                     .then(function (response) {

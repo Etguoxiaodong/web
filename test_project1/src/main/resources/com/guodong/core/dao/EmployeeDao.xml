@@ -9,6 +9,7 @@
     <result column="idnum" property="idnum" jdbcType="VARCHAR" />
     <result column="departmentid" property="departmentid" jdbcType="BIGINT" />
     <result column="work" property="work" jdbcType="VARCHAR" />
+    <result column="hiredate" property="hiredate" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,7 +71,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, name, gender, phone, idnum, departmentid, work
+      id, name, gender, phone, idnum, departmentid, work, hiredate
     </if>
     <if test="fields != null" >
       ${fields}
@@ -92,7 +93,7 @@
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,name,gender,phone,idnum,departmentid,work
+    id,name,gender,phone,idnum,departmentid,work,hiredate
     from employee
     where id = #{id,jdbcType=BIGINT}
   </select>
@@ -109,10 +110,10 @@
   <insert id="insert" parameterType="com.guodong.core.pojo.Employee" >
     insert into employee (id, name, gender, 
       phone, idnum, departmentid, 
-      work)
+      work, hiredate)
     values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR}, #{idnum,jdbcType=VARCHAR}, #{departmentid,jdbcType=BIGINT}, 
-      #{work,jdbcType=VARCHAR})
+      #{work,jdbcType=VARCHAR}, #{hiredate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.guodong.core.pojo.Employee" >
     insert into employee
@@ -138,6 +139,9 @@
       <if test="work != null" >
         work,
       </if>
+      <if test="hiredate != null" >
+        hiredate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -160,6 +164,9 @@
       </if>
       <if test="work != null" >
         #{work,jdbcType=VARCHAR},
+      </if>
+      <if test="hiredate != null" >
+        #{hiredate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -193,6 +200,9 @@
       <if test="record.work != null" >
         work = #{record.work,jdbcType=VARCHAR},
       </if>
+      <if test="record.hiredate != null" >
+        hiredate = #{record.hiredate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -206,7 +216,8 @@
       phone = #{record.phone,jdbcType=VARCHAR},
       idnum = #{record.idnum,jdbcType=VARCHAR},
       departmentid = #{record.departmentid,jdbcType=BIGINT},
-      work = #{record.work,jdbcType=VARCHAR}
+      work = #{record.work,jdbcType=VARCHAR},
+      hiredate = #{record.hiredate,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -232,6 +243,9 @@
       <if test="work != null" >
         work = #{work,jdbcType=VARCHAR},
       </if>
+      <if test="hiredate != null" >
+        hiredate = #{hiredate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -242,7 +256,8 @@
       phone = #{phone,jdbcType=VARCHAR},
       idnum = #{idnum,jdbcType=VARCHAR},
       departmentid = #{departmentid,jdbcType=BIGINT},
-      work = #{work,jdbcType=VARCHAR}
+      work = #{work,jdbcType=VARCHAR},
+      hiredate = #{hiredate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

@@ -3,21 +3,23 @@ package com.guodong.core.pojo;
 import java.io.Serializable;
 
 public class Managementfee implements Serializable {
-    private Integer id;
+    private Long id;
 
     private String year;
 
-    private Integer ownerid;
+    private Long ownerid;
 
-    private String status;
+    private String house;
+
+    private Long status;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -29,20 +31,28 @@ public class Managementfee implements Serializable {
         this.year = year == null ? null : year.trim();
     }
 
-    public Integer getOwnerid() {
+    public Long getOwnerid() {
         return ownerid;
     }
 
-    public void setOwnerid(Integer ownerid) {
+    public void setOwnerid(Long ownerid) {
         this.ownerid = ownerid;
     }
 
-    public String getStatus() {
+    public String getHouse() {
+        return house;
+    }
+
+    public void setHouse(String house) {
+        this.house = house == null ? null : house.trim();
+    }
+
+    public Long getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
-        this.status = status == null ? null : status.trim();
+    public void setStatus(Long status) {
+        this.status = status;
     }
 
     @Override
@@ -54,6 +64,7 @@ public class Managementfee implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", year=").append(year);
         sb.append(", ownerid=").append(ownerid);
+        sb.append(", house=").append(house);
         sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
@@ -75,6 +86,7 @@ public class Managementfee implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getYear() == null ? other.getYear() == null : this.getYear().equals(other.getYear()))
             && (this.getOwnerid() == null ? other.getOwnerid() == null : this.getOwnerid().equals(other.getOwnerid()))
+            && (this.getHouse() == null ? other.getHouse() == null : this.getHouse().equals(other.getHouse()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
@@ -85,6 +97,7 @@ public class Managementfee implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getYear() == null) ? 0 : getYear().hashCode());
         result = prime * result + ((getOwnerid() == null) ? 0 : getOwnerid().hashCode());
+        result = prime * result + ((getHouse() == null) ? 0 : getHouse().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }

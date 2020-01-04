@@ -11,7 +11,7 @@ public interface ManagementfeeDao {
 
     int deleteByExample(ManagementfeeQuery example);
 
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Managementfee record);
 
@@ -19,7 +19,7 @@ public interface ManagementfeeDao {
 
     List<Managementfee> selectByExample(ManagementfeeQuery example);
 
-    Managementfee selectByPrimaryKey(Integer id);
+    Managementfee selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Managementfee record, @Param("example") ManagementfeeQuery example);
 

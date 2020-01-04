@@ -124,52 +124,52 @@ public class ManagementfeeQuery {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(Long value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotEqualTo(Integer value) {
+        public Criteria andIdNotEqualTo(Long value) {
             addCriterion("id <>", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThan(Integer value) {
+        public Criteria andIdGreaterThan(Long value) {
             addCriterion("id >", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdGreaterThanOrEqualTo(Long value) {
             addCriterion("id >=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThan(Integer value) {
+        public Criteria andIdLessThan(Long value) {
             addCriterion("id <", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdLessThanOrEqualTo(Integer value) {
+        public Criteria andIdLessThanOrEqualTo(Long value) {
             addCriterion("id <=", value, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdIn(List<Integer> values) {
+        public Criteria andIdIn(List<Long> values) {
             addCriterion("id in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotIn(List<Integer> values) {
+        public Criteria andIdNotIn(List<Long> values) {
             addCriterion("id not in", values, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdBetween(Integer value1, Integer value2) {
+        public Criteria andIdBetween(Long value1, Long value2) {
             addCriterion("id between", value1, value2, "id");
             return (Criteria) this;
         }
 
-        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdNotBetween(Long value1, Long value2) {
             addCriterion("id not between", value1, value2, "id");
             return (Criteria) this;
         }
@@ -254,53 +254,123 @@ public class ManagementfeeQuery {
             return (Criteria) this;
         }
 
-        public Criteria andOwneridEqualTo(Integer value) {
+        public Criteria andOwneridEqualTo(Long value) {
             addCriterion("ownerid =", value, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridNotEqualTo(Integer value) {
+        public Criteria andOwneridNotEqualTo(Long value) {
             addCriterion("ownerid <>", value, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridGreaterThan(Integer value) {
+        public Criteria andOwneridGreaterThan(Long value) {
             addCriterion("ownerid >", value, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridGreaterThanOrEqualTo(Integer value) {
+        public Criteria andOwneridGreaterThanOrEqualTo(Long value) {
             addCriterion("ownerid >=", value, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridLessThan(Integer value) {
+        public Criteria andOwneridLessThan(Long value) {
             addCriterion("ownerid <", value, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridLessThanOrEqualTo(Integer value) {
+        public Criteria andOwneridLessThanOrEqualTo(Long value) {
             addCriterion("ownerid <=", value, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridIn(List<Integer> values) {
+        public Criteria andOwneridIn(List<Long> values) {
             addCriterion("ownerid in", values, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridNotIn(List<Integer> values) {
+        public Criteria andOwneridNotIn(List<Long> values) {
             addCriterion("ownerid not in", values, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridBetween(Integer value1, Integer value2) {
+        public Criteria andOwneridBetween(Long value1, Long value2) {
             addCriterion("ownerid between", value1, value2, "ownerid");
             return (Criteria) this;
         }
 
-        public Criteria andOwneridNotBetween(Integer value1, Integer value2) {
+        public Criteria andOwneridNotBetween(Long value1, Long value2) {
             addCriterion("ownerid not between", value1, value2, "ownerid");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseIsNull() {
+            addCriterion("house is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseIsNotNull() {
+            addCriterion("house is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseEqualTo(String value) {
+            addCriterion("house =", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseNotEqualTo(String value) {
+            addCriterion("house <>", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseGreaterThan(String value) {
+            addCriterion("house >", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseGreaterThanOrEqualTo(String value) {
+            addCriterion("house >=", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseLessThan(String value) {
+            addCriterion("house <", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseLessThanOrEqualTo(String value) {
+            addCriterion("house <=", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseLike(String value) {
+            addCriterion("house like", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseNotLike(String value) {
+            addCriterion("house not like", value, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseIn(List<String> values) {
+            addCriterion("house in", values, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseNotIn(List<String> values) {
+            addCriterion("house not in", values, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseBetween(String value1, String value2) {
+            addCriterion("house between", value1, value2, "house");
+            return (Criteria) this;
+        }
+
+        public Criteria andHouseNotBetween(String value1, String value2) {
+            addCriterion("house not between", value1, value2, "house");
             return (Criteria) this;
         }
 
@@ -314,62 +384,52 @@ public class ManagementfeeQuery {
             return (Criteria) this;
         }
 
-        public Criteria andStatusEqualTo(String value) {
+        public Criteria andStatusEqualTo(Long value) {
             addCriterion("status =", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotEqualTo(String value) {
+        public Criteria andStatusNotEqualTo(Long value) {
             addCriterion("status <>", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThan(String value) {
+        public Criteria andStatusGreaterThan(Long value) {
             addCriterion("status >", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusGreaterThanOrEqualTo(String value) {
+        public Criteria andStatusGreaterThanOrEqualTo(Long value) {
             addCriterion("status >=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThan(String value) {
+        public Criteria andStatusLessThan(Long value) {
             addCriterion("status <", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLessThanOrEqualTo(String value) {
+        public Criteria andStatusLessThanOrEqualTo(Long value) {
             addCriterion("status <=", value, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusLike(String value) {
-            addCriterion("status like", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusNotLike(String value) {
-            addCriterion("status not like", value, "status");
-            return (Criteria) this;
-        }
-
-        public Criteria andStatusIn(List<String> values) {
+        public Criteria andStatusIn(List<Long> values) {
             addCriterion("status in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotIn(List<String> values) {
+        public Criteria andStatusNotIn(List<Long> values) {
             addCriterion("status not in", values, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusBetween(String value1, String value2) {
+        public Criteria andStatusBetween(Long value1, Long value2) {
             addCriterion("status between", value1, value2, "status");
             return (Criteria) this;
         }
 
-        public Criteria andStatusNotBetween(String value1, String value2) {
+        public Criteria andStatusNotBetween(Long value1, Long value2) {
             addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }

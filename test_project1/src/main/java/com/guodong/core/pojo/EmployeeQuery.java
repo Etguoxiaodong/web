@@ -1,6 +1,7 @@
 package com.guodong.core.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EmployeeQuery {
@@ -581,6 +582,66 @@ public class EmployeeQuery {
 
         public Criteria andWorkNotBetween(String value1, String value2) {
             addCriterion("work not between", value1, value2, "work");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateIsNull() {
+            addCriterion("hiredate is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateIsNotNull() {
+            addCriterion("hiredate is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateEqualTo(Date value) {
+            addCriterion("hiredate =", value, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateNotEqualTo(Date value) {
+            addCriterion("hiredate <>", value, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateGreaterThan(Date value) {
+            addCriterion("hiredate >", value, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateGreaterThanOrEqualTo(Date value) {
+            addCriterion("hiredate >=", value, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateLessThan(Date value) {
+            addCriterion("hiredate <", value, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateLessThanOrEqualTo(Date value) {
+            addCriterion("hiredate <=", value, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateIn(List<Date> values) {
+            addCriterion("hiredate in", values, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateNotIn(List<Date> values) {
+            addCriterion("hiredate not in", values, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateBetween(Date value1, Date value2) {
+            addCriterion("hiredate between", value1, value2, "hiredate");
+            return (Criteria) this;
+        }
+
+        public Criteria andHiredateNotBetween(Date value1, Date value2) {
+            addCriterion("hiredate not between", value1, value2, "hiredate");
             return (Criteria) this;
         }
     }

@@ -9,6 +9,8 @@ import com.guodong.core.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -29,5 +31,17 @@ public class DepartmentServiceImpl implements DepartmentService {
 	@Override
 	public void updateDep(Department department) {
 		departmentDao.updateByPrimaryKeySelective(department);
+	}
+
+	@Override
+	public void deleteDepWithId(Long[] ids) {
+		for (Long id : ids) {
+			departmentDao.deleteByPrimaryKey(id);
+		}
+	}
+
+	@Override
+	public List<Department> getDepartmentList() {
+		return departmentDao.selectByExample(null);
 	}
 }

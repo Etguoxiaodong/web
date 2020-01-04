@@ -33,7 +33,9 @@
                     </div>
                     <div class="box-tools pull-right">
                         <div class="has-feedback" style="margin-left: 650px; font-size: 14px">
-                            部门: <input type="text" style="width: 100px" v-model="searchObj.department" class="form-control" >
+                            部门: <select name="searchdepselect" v-model="searchObj.departmentid" >
+                            <option :value="department.id" v-for="department in departmentList">{{department.department}}</option>
+                        </select>
                             姓名: <input type="text" style="width: 100px" v-model="searchObj.name" class="form-control">
                             <input class="btn btn-default" type="button"  @click="pageHandler(1)"  value="查询">
                         </div>
@@ -67,7 +69,7 @@
                     <td>{{empItem.gender}}</td>
                     <td>{{empItem.phone}}</td>
                     <td>{{empItem.idnum}}</td>
-                    <td>{{empItem.department}}</td>
+                    <td>{{showDepartmentName(empItem.departmentid)}}</td>
                     <td>{{empItem.work}}</td>
                     <td>{{empItem.hiredate}}</td>
                     <td class="text-center">
@@ -113,7 +115,10 @@
                         </tr>
                         <tr>
                             <td>部门</td>
-                            <td><input  class="form-control" v-model="employee.department" placeholder="部门">  </td>
+                            <td><select name="depselect" v-model="employee.departmentid" >
+                                <option :value="department.id" v-for="department in departmentList">{{department.department}}</option>
+                            </select>
+                            </td>
                         </tr>
                         <tr>
                             <td>工作</td>
@@ -154,7 +159,8 @@
             maxPage:9,
             selectedID:[],
             searchObj:{},
-            title:"添加员工"
+            title:"添加员工",
+            departmentList:[]
         },
         methods:{
             pageHandler:function (page) {
@@ -167,6 +173,19 @@
                 }).catch(function (reason) {
                     console.log(reason);
                 });
+                this.getDepartmentList();
+            },
+            getDepartmentList:function () {
+                var _this = this;
+                axios.get("/dep/getDepartmentList.do")
+                    .then(function (response) {
+                        if (response.data.success){
+                            console.log(response.data.message);
+                            _this.departmentList = response.data.message;
+                        } else {
+                            alert(response.data.message);
+                        }
+                    })
             },
             add:function(){
                 this.title = "添加员工";
@@ -195,7 +214,13 @@
                         }
                     })
             },
-
+            showDepartmentName:function (id) {
+                for(i = 0;i < this.departmentList.length;i++){
+                    if(this.departmentList[i].id == id){
+                        return this.departmentList[i].department;
+                    }
+                }
+            },
             deleteSelection:function (event,empItem) {
                 //判断当前是否选中
                 if(event.target.checked){

@@ -1,6 +1,7 @@
 package com.guodong.core.pojo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Employee implements Serializable {
     private Long id;
@@ -16,6 +17,8 @@ public class Employee implements Serializable {
     private Long departmentid;
 
     private String work;
+
+    private Date hiredate;
 
     private static final long serialVersionUID = 1L;
 
@@ -75,6 +78,14 @@ public class Employee implements Serializable {
         this.work = work == null ? null : work.trim();
     }
 
+    public Date getHiredate() {
+        return hiredate;
+    }
+
+    public void setHiredate(Date hiredate) {
+        this.hiredate = hiredate;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -88,6 +99,7 @@ public class Employee implements Serializable {
         sb.append(", idnum=").append(idnum);
         sb.append(", departmentid=").append(departmentid);
         sb.append(", work=").append(work);
+        sb.append(", hiredate=").append(hiredate);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -111,7 +123,8 @@ public class Employee implements Serializable {
             && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()))
             && (this.getIdnum() == null ? other.getIdnum() == null : this.getIdnum().equals(other.getIdnum()))
             && (this.getDepartmentid() == null ? other.getDepartmentid() == null : this.getDepartmentid().equals(other.getDepartmentid()))
-            && (this.getWork() == null ? other.getWork() == null : this.getWork().equals(other.getWork()));
+            && (this.getWork() == null ? other.getWork() == null : this.getWork().equals(other.getWork()))
+            && (this.getHiredate() == null ? other.getHiredate() == null : this.getHiredate().equals(other.getHiredate()));
     }
 
     @Override
@@ -125,6 +138,7 @@ public class Employee implements Serializable {
         result = prime * result + ((getIdnum() == null) ? 0 : getIdnum().hashCode());
         result = prime * result + ((getDepartmentid() == null) ? 0 : getDepartmentid().hashCode());
         result = prime * result + ((getWork() == null) ? 0 : getWork().hashCode());
+        result = prime * result + ((getHiredate() == null) ? 0 : getHiredate().hashCode());
         return result;
     }
 }

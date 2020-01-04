@@ -13,6 +13,8 @@ public class House implements Serializable {
 
     private Double area;
 
+    private Integer status;
+
     private static final long serialVersionUID = 1L;
 
     public Long getId() {
@@ -55,6 +57,14 @@ public class House implements Serializable {
         this.area = area;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -66,6 +76,7 @@ public class House implements Serializable {
         sb.append(", unit=").append(unit);
         sb.append(", door=").append(door);
         sb.append(", area=").append(area);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -87,7 +98,8 @@ public class House implements Serializable {
             && (this.getBuilding() == null ? other.getBuilding() == null : this.getBuilding().equals(other.getBuilding()))
             && (this.getUnit() == null ? other.getUnit() == null : this.getUnit().equals(other.getUnit()))
             && (this.getDoor() == null ? other.getDoor() == null : this.getDoor().equals(other.getDoor()))
-            && (this.getArea() == null ? other.getArea() == null : this.getArea().equals(other.getArea()));
+            && (this.getArea() == null ? other.getArea() == null : this.getArea().equals(other.getArea()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -99,6 +111,7 @@ public class House implements Serializable {
         result = prime * result + ((getUnit() == null) ? 0 : getUnit().hashCode());
         result = prime * result + ((getDoor() == null) ? 0 : getDoor().hashCode());
         result = prime * result + ((getArea() == null) ? 0 : getArea().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 }

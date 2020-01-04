@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.guodong.core.dao.ManagementfeeDao" >
   <resultMap id="BaseResultMap" type="com.guodong.core.pojo.Managementfee" >
-    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="year" property="year" jdbcType="VARCHAR" />
-    <result column="ownerid" property="ownerid" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="ownerid" property="ownerid" jdbcType="BIGINT" />
+    <result column="house" property="house" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +68,7 @@
   </sql>
   <sql id="Base_Column_List" >
     <if test="fields == null" >
-      id, year, ownerid, status
+      id, year, ownerid, house, status
     </if>
     <if test="fields != null" >
       ${fields}
@@ -87,15 +88,15 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
-    id,year,ownerid,status
+    id,year,ownerid,house,status
     from managementfee
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from managementfee
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.guodong.core.pojo.ManagementfeeQuery" >
     delete from managementfee
@@ -105,9 +106,9 @@
   </delete>
   <insert id="insert" parameterType="com.guodong.core.pojo.Managementfee" >
     insert into managementfee (id, year, ownerid, 
-      status)
-    values (#{id,jdbcType=INTEGER}, #{year,jdbcType=VARCHAR}, #{ownerid,jdbcType=INTEGER}, 
-      #{status,jdbcType=VARCHAR})
+      house, status)
+    values (#{id,jdbcType=BIGINT}, #{year,jdbcType=VARCHAR}, #{ownerid,jdbcType=BIGINT}, 
+      #{house,jdbcType=VARCHAR}, #{status,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.guodong.core.pojo.Managementfee" >
     insert into managementfee
@@ -121,22 +122,28 @@
       <if test="ownerid != null" >
         ownerid,
       </if>
+      <if test="house != null" >
+        house,
+      </if>
       <if test="status != null" >
         status,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id,jdbcType=BIGINT},
       </if>
       <if test="year != null" >
         #{year,jdbcType=VARCHAR},
       </if>
       <if test="ownerid != null" >
-        #{ownerid,jdbcType=INTEGER},
+        #{ownerid,jdbcType=BIGINT},
+      </if>
+      <if test="house != null" >
+        #{house,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        #{status,jdbcType=VARCHAR},
+        #{status,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -150,16 +157,19 @@
     update managementfee
     <set >
       <if test="record.id != null" >
-        id = #{record.id,jdbcType=INTEGER},
+        id = #{record.id,jdbcType=BIGINT},
       </if>
       <if test="record.year != null" >
         year = #{record.year,jdbcType=VARCHAR},
       </if>
       <if test="record.ownerid != null" >
-        ownerid = #{record.ownerid,jdbcType=INTEGER},
+        ownerid = #{record.ownerid,jdbcType=BIGINT},
+      </if>
+      <if test="record.house != null" >
+        house = #{record.house,jdbcType=VARCHAR},
       </if>
       <if test="record.status != null" >
-        status = #{record.status,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -168,10 +178,11 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update managementfee
-    set id = #{record.id,jdbcType=INTEGER},
+    set id = #{record.id,jdbcType=BIGINT},
       year = #{record.year,jdbcType=VARCHAR},
-      ownerid = #{record.ownerid,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=VARCHAR}
+      ownerid = #{record.ownerid,jdbcType=BIGINT},
+      house = #{record.house,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=BIGINT}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,19 +194,23 @@
         year = #{year,jdbcType=VARCHAR},
       </if>
       <if test="ownerid != null" >
-        ownerid = #{ownerid,jdbcType=INTEGER},
+        ownerid = #{ownerid,jdbcType=BIGINT},
+      </if>
+      <if test="house != null" >
+        house = #{house,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
-        status = #{status,jdbcType=VARCHAR},
+        status = #{status,jdbcType=BIGINT},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.guodong.core.pojo.Managementfee" >
     update managementfee
     set year = #{year,jdbcType=VARCHAR},
-      ownerid = #{ownerid,jdbcType=INTEGER},
-      status = #{status,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+      ownerid = #{ownerid,jdbcType=BIGINT},
+      house = #{house,jdbcType=VARCHAR},
+      status = #{status,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
